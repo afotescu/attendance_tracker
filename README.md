@@ -7,7 +7,7 @@ This is a small script I've made for my guild to be able to track attendance of 
 1. Gets your calendar from WCL website
 2. Checks all people who were present in at least one boss during this night
 3. Collects the data for a specified period of time
-4. Generates CSV (or any other separator) data and copies it to your clipboard
+4. Generates a txt file with all the data in it
 
 ## Usage
 
@@ -33,7 +33,7 @@ Example for my guild:
     node index.js -g 487625 -f 2020-12-01 -t 2020-12-31
 ```
 
-4. Paste it in google sheets (keep default separator) or CSV file (set seaparator to `,`) to be see the attendance of your guild.
+4. Paste it in google sheets (keep default separator) or CSV file (set seaparator to `,`) to see the attendance of your guild.
    Example:
    ![alt text](https://raw.githubusercontent.com/afotescu/attendance_tracker/master/example.png)
 
