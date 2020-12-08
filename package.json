@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pkg index.js"
+    "build": "pkg -o wow-attendance.exe index.js"
   },
   "author": "Artiom Fotescu",
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "clipboardy": "^2.3.0",
     "commander": "^6.2.0",
     "got": "^11.8.0",
     "lodash": "^4.17.20",

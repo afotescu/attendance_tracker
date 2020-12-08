@@ -1,14 +1,13 @@
 const got = require("got");
 const moment = require("moment");
 const _ = require("lodash");
-const { writeSync } = require("clipboardy");
+const { writeFileSync } = require("fs");
 const { program } = require("commander");
 const {
   getReplacements,
   getMemebers,
   getParticipantsURL,
 } = require("./helpers");
-const { replace } = require("lodash");
 
 program.version("1.0.0");
 program
@@ -47,7 +46,6 @@ const logsURL = "https://classic.warcraftlogs.com";
 const guildCalendarURL = `${logsURL}/guild/calendar-feed/${guildID}/0/0?&start=${firstDay}&end=${lastDay}`;
 const replacements = getReplacements();
 let members = getMemebers();
-
 (async () => {
   try {
     const response = await got(guildCalendarURL).json();
@@ -109,18 +107,20 @@ let members = getMemebers();
     members = _.fromPairs(
       _.sortBy(_.toPairs(members), (v) => v[1].missed).reverse()
     );
-    let csv = `Attendance from ${firstDay} to ${lastDay}\n`;
-    csv += `${separator}${
+    let data = `Attendance from ${firstDay} to ${lastDay}\n`;
+    data += `${separator}${
       averageAttendance * 100
     }%${separator}Missed${separator}${dates.join(separator)}\n`;
     Object.keys(members).forEach((member) => {
       const { missed, attendance, attended } = members[member];
-      csv += `${member}${separator}${
+      data += `${member}${separator}${
         attendance * 100
       }%${separator}${missed}${separator}${attended.join(separator)}\n`;
     });
-    writeSync(csv);
-    console.log("Report was copied to your clipboard");
+
+    const fileName = `attendance_${firstDay}_${lastDay}.txt`;
+    writeFileSync(`./${fileName}`, data, { encoding: "utf-8" });
+    console.log(`Report was created attendance_${firstDay}_${lastDay}.txt`);
   } catch (e) {
     console.error("An error occured", e);
   } finally {
